@@ -4,6 +4,10 @@
 
 This is a Chrome/Edge/Firefox extension that allows you to paste text into any input field, even if the authors of the website have disabled pasting for god knows what reason.
 
+# Usage
+
+The idea is you can paste into the extension's dropdown box and the extension will then 'type' the contents into input field.
+
 Safari coming soon?
 
 # Installing a Browser Extension from Source Code
