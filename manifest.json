@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Paste Helper",
+  "name": "Paste Anyway",
   "version": "1.0",
   "description": "Allows pasting text on sites that have disabled it",
   "action": {
