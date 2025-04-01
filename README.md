@@ -6,9 +6,12 @@ This is a Chrome/Edge/Firefox extension that allows you to paste text into any i
 
 # Usage
 
-The idea is you can paste into the extension's dropdown box and the extension will then 'type' the contents into input field.
+There are two methods to use the extension:
 
-Safari coming soon?
+1. You can paste into the extension's dropdown box and hit 'Send'. The extension will then 'type' the contents into input field.
+2. There's a context menu option that appears when you right-click on any input field. You can select "Paste Anyway" from the context menu, and it will type the text contents of your clipboard directly into that input field.
+
+Safari coming soon? It has a way different extension mechanism
 
 # Installing a Browser Extension from Source Code
 
