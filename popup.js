@@ -1,103 +1,62 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const pasteText = document.getElementById('pasteText');
-    const sendButton = document.getElementById('sendButton');
-    const status = document.getElementById('status');
+/**
+ * PasteAnyway Popup Script
+ *
+ * Handles the popup UI for manually entering text to paste.
+ */
 
-    // Auto-focus the textarea when popup opens
-    pasteText.focus();
+document.addEventListener('DOMContentLoaded', () => {
+  const elements = {
+    pasteText: document.getElementById('pasteText'),
+    sendButton: document.getElementById('sendButton'),
+    status: document.getElementById('status')
+  };
 
-    sendButton.addEventListener('click', function () {
-        const text = pasteText.value;
+  // Auto-focus the textarea when popup opens
+  elements.pasteText.focus();
 
-        if (!text) {
-            status.textContent = 'Please enter some text first.';
-            return;
-        }
+  /**
+   * Updates the status message.
+   */
+  const updateStatus = (message) => {
+    elements.status.textContent = message;
+  };
 
-        status.textContent = 'Sending text...';
+  /**
+   * Injects the content script and simulates typing the text.
+   */
+  const sendTextToPage = async (text) => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                function: simulateTyping,
-                args: [text]
-            }).then(() => {
-                status.textContent = 'Text sent successfully!';
-            }).catch((error) => {
-                status.textContent = 'Error: ' + error.message;
-            });
-        });
+    // First inject the content script
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ['lib/content-script.js']
     });
+
+    // Then call simulateTyping with the text
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: (textToType) => window.__pasteAnyway.simulateTyping(textToType),
+      args: [text]
+    });
+  };
+
+  // Handle send button click
+  elements.sendButton.addEventListener('click', async () => {
+    const text = elements.pasteText.value;
+
+    if (!text) {
+      updateStatus('Please enter some text first.');
+      return;
+    }
+
+    updateStatus('Sending text...');
+
+    try {
+      await sendTextToPage(text);
+      updateStatus('Text sent successfully!');
+    } catch (error) {
+      updateStatus('Error: ' + error.message);
+    }
+  });
 });
-
-// This function is shared between popup.js and background.js
-// Function that will be injected into the page to simulate typing
-function simulateTyping(text) {
-    function typeCharacter(char) {
-        const event = new KeyboardEvent('keydown', {
-            key: char,
-            code: 'Key' + char.toUpperCase(),
-            charCode: char.charCodeAt(0),
-            keyCode: char.charCodeAt(0),
-            which: char.charCodeAt(0),
-            bubbles: true
-        });
-
-        document.activeElement.dispatchEvent(event);
-
-        // Also dispatch a keypress event for compatibility
-        const pressEvent = new KeyboardEvent('keypress', {
-            key: char,
-            code: 'Key' + char.toUpperCase(),
-            charCode: char.charCodeAt(0),
-            keyCode: char.charCodeAt(0),
-            which: char.charCodeAt(0),
-            bubbles: true
-        });
-        document.activeElement.dispatchEvent(pressEvent);
-
-        // Insert the character into the focused element if it's an input or textarea
-        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-            const start = document.activeElement.selectionStart;
-            const end = document.activeElement.selectionEnd;
-            const value = document.activeElement.value;
-
-            document.activeElement.value = value.substring(0, start) + char + value.substring(end);
-            document.activeElement.selectionStart = document.activeElement.selectionEnd = start + 1;
-        } else if (document.activeElement.isContentEditable) {
-            // For contentEditable elements
-            const selection = window.getSelection();
-            const range = selection.getRangeAt(0);
-            const textNode = document.createTextNode(char);
-            range.deleteContents();
-            range.insertNode(textNode);
-            range.setStartAfter(textNode);
-            range.setEndAfter(textNode);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-
-        // Dispatch keyup event
-        const upEvent = new KeyboardEvent('keyup', {
-            key: char,
-            code: 'Key' + char.toUpperCase(),
-            charCode: char.charCodeAt(0),
-            keyCode: char.charCodeAt(0),
-            which: char.charCodeAt(0),
-            bubbles: true
-        });
-        document.activeElement.dispatchEvent(upEvent);
-    }
-
-    // Add a small delay between characters to make it more realistic
-    const delay = 10; // milliseconds between each character
-
-    // Type each character with a delay
-    for (let i = 0; i < text.length; i++) {
-        setTimeout(() => {
-            typeCharacter(text[i]);
-        }, i * delay);
-    }
-
-    return `Typed ${text.length} characters`;
-}

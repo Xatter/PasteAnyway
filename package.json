@@ -1,0 +1,16 @@
+{
+  "name": "paste-anyway",
+  "version": "1.0.0",
+  "description": "Browser extension that allows pasting text on sites that have disabled it",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "vitest": "^2.0.0"
+  },
+  "keywords": ["browser-extension", "paste", "clipboard"],
+  "license": "MIT"
+}

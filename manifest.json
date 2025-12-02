@@ -27,6 +27,10 @@
     "128": "images/icon128.png"
   },
   "background": {
-    "service_worker": "background.js"
-  }
+    "scripts": ["background.js"]
+  },
+  "web_accessible_resources": [{
+    "resources": ["lib/content-script.js"],
+    "matches": ["<all_urls>"]
+  }]
 }

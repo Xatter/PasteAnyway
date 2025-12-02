@@ -13,6 +13,47 @@ There are two methods to use the extension:
 
 Safari coming soon? It has a way different extension mechanism
 
+## How It Works
+
+The extension simulates keyboard input character-by-character, bypassing paste event listeners. It also dispatches `input` events for compatibility with modern frameworks like React, Vue, and Angular.
+
+# Development
+
+## Prerequisites
+
+- Node.js 18+
+- npm
+
+## Setup
+
+```bash
+npm install
+```
+
+## Running Tests
+
+```bash
+npm test           # Run tests once
+npm run test:watch # Run tests in watch mode
+```
+
+## Project Structure
+
+```
+PasteAnyway/
+├── manifest.json          # Extension manifest (MV3)
+├── background.js          # Service worker / background script
+├── popup.html/js          # Extension popup UI
+├── lib/
+│   └── content-script.js  # Injected typing simulation
+├── core/                  # Pure functions (tested)
+│   ├── url-validation.js
+│   ├── keyboard-events.js
+│   ├── text-insertion.js
+│   └── typing-scheduler.js
+└── test-utils/            # Test utilities
+```
+
 # Installing a Browser Extension from Source Code
 
 This guide walks you through the process of installing an unpacked/source code version of a browser extension across different browsers.
