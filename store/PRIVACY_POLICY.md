@@ -40,9 +40,6 @@ The extension requires the following browser permissions:
 - **Current usage:** Not actively used for data storage
 - **Data handling:** Any future stored data would remain local to your browser
 
-### host_permissions (<all_urls>)
-- **Purpose:** To allow the extension to work on any website where paste is blocked
-- **Data handling:** The extension does not read or collect any website content; it only simulates keyboard input in form fields
 
 ## Data Storage
 
