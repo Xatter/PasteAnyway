@@ -37,6 +37,25 @@ npm test           # Run tests once
 npm run test:watch # Run tests in watch mode
 ```
 
+## Building for Store Submission
+
+To create a zip file for submitting to browser extension stores (Chrome Web Store, Mozilla Add-ons):
+
+```bash
+npm run build:store
+```
+
+This will:
+- Extract the version from `manifest.json`
+- Create `store/paste-anyway-v{VERSION}.zip`
+- Include only the necessary extension files (excludes tests, node_modules, etc.)
+
+The resulting zip can be uploaded directly to:
+- [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
+- [Mozilla Add-on Developer Hub](https://addons.mozilla.org/developers/)
+
+**Note:** The manifest.json is cross-browser compatible and works with both Chrome 121+ and Firefox 121+.
+
 ## Project Structure
 
 ```
