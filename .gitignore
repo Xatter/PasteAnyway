@@ -9,3 +9,6 @@ node_modules/
 
 # Test coverage
 coverage/
+
+# Build artifacts
+store/*.zip

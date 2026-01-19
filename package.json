@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:store": "./scripts/build-store.sh"
   },
   "devDependencies": {
     "jsdom": "^25.0.0",
