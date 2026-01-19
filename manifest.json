@@ -3,6 +3,15 @@
   "name": "Paste Anyway",
   "version": "1.0",
   "description": "Allows pasting text on sites that have disabled it",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "paste-anyway@extroverteddeveloper.com",
+      "strict_min_version": "121.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -23,6 +32,7 @@
     "128": "images/icon128.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   }
 }
