@@ -15,8 +15,7 @@
     "activeTab",
     "scripting",
     "contextMenus",
-    "clipboardRead",
-    "storage"
+    "clipboardRead"
   ],
   "icons": {
     "16": "images/icon16.png",
