@@ -12,3 +12,4 @@ coverage/
 
 # Build artifacts
 store/*.zip
+store/**/*.zip
