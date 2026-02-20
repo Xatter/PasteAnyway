@@ -4,6 +4,8 @@
 
 This is a Chrome/Edge/Firefox extension that allows you to paste text into any input field, even if the authors of the website have disabled pasting for god knows what reason.
 
+**Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/paste-anyway/lkniolaolifgdbecekhlejhpoofjjhbd)**
+
 # Usage
 
 There are two methods to use the extension:
