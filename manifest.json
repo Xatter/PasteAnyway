@@ -34,5 +34,19 @@
   "background": {
     "service_worker": "background.js",
     "scripts": ["background.js"]
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["lib/inject-interceptor.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/event-interceptor.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
