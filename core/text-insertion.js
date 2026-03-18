@@ -16,6 +16,7 @@ export const insertCharAtPosition = ({ value, start, end, char }) =>
  * Calculates the new cursor position after inserting a character.
  *
  * @param {number} start - Current cursor start position
- * @returns {number} New cursor position (always start + 1)
+ * @param {string} [char] - The character that was inserted (used to determine UTF-16 length)
+ * @returns {number} New cursor position (start + char's UTF-16 length, or start + 1 if no char)
  */
-export const calculateNewCursorPosition = (start) => start + 1;
+export const calculateNewCursorPosition = (start, char) => start + (char ? char.length : 1);

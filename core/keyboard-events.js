@@ -57,8 +57,8 @@ const getKeyCode = (char) => {
   if (char === '$') return 'Digit4'; // Shift+4
   if (char === '%') return 'Digit5'; // Shift+5
 
-  // Fallback for other characters
-  return `Key${char.toUpperCase()}`;
+  // Fallback for non-ASCII / unmapped characters
+  return 'Unidentified';
 };
 
 /**

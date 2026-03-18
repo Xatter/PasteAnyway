@@ -95,4 +95,34 @@ describe('calculateNewCursorPosition', () => {
       expected: 101
     });
   });
+
+  test('emoji / surrogate pair advancement', () => {
+    assert({
+      given: 'cursor at position 0 and an emoji character',
+      should: 'advance by 2 (emoji UTF-16 length)',
+      actual: calculateNewCursorPosition(0, '😀'),
+      expected: 2
+    });
+
+    assert({
+      given: 'cursor at position 5 and an emoji character',
+      should: 'advance by 2 from position 5',
+      actual: calculateNewCursorPosition(5, '🎉'),
+      expected: 7
+    });
+
+    assert({
+      given: 'cursor at position 0 and a regular character',
+      should: 'advance by 1',
+      actual: calculateNewCursorPosition(0, 'a'),
+      expected: 1
+    });
+
+    assert({
+      given: 'cursor at position 0 with no char argument (backward compat)',
+      should: 'advance by 1',
+      actual: calculateNewCursorPosition(0),
+      expected: 1
+    });
+  });
 });

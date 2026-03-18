@@ -15,6 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.pasteText.focus();
 
   /**
+   * Browser-specific restricted URL patterns.
+   * Extensions cannot run on these pages for security reasons.
+   */
+  const RESTRICTED_PATTERNS = [
+    'chrome://', 'chrome-extension://', 'chrome.google.com/webstore',
+    'about:', 'moz-extension://', 'addons.mozilla.org',
+    'edge://', 'microsoftedge.microsoft.com/addons'
+  ];
+
+  const isRestrictedUrl = (url = '') =>
+    url ? RESTRICTED_PATTERNS.some(p => url.includes(p)) : false;
+
+  /**
    * Updates the status message.
    */
   const updateStatus = (message) => {
@@ -26,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const sendTextToPage = async (text) => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    if (isRestrictedUrl(tab.url)) {
+      throw new Error('Cannot paste on browser internal pages.');
+    }
 
     // First inject the content script
     await chrome.scripting.executeScript({

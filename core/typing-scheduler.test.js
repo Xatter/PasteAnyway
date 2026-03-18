@@ -77,4 +77,36 @@ describe('createTypingSchedule', () => {
       ]
     });
   });
+
+  test('emoji / surrogate pair handling', () => {
+    assert({
+      given: 'string with emoji surrounded by ASCII characters',
+      should: 'produce 3 entries with correct chars and delays',
+      actual: createTypingSchedule('a😀b'),
+      expected: [
+        { char: 'a', delay: 0 },
+        { char: '😀', delay: 10 },
+        { char: 'b', delay: 20 }
+      ]
+    });
+
+    assert({
+      given: 'string that is just an emoji',
+      should: 'produce 1 entry with the full emoji',
+      actual: createTypingSchedule('😀'),
+      expected: [
+        { char: '😀', delay: 0 }
+      ]
+    });
+
+    assert({
+      given: 'string with multiple emoji',
+      should: 'treat each emoji as one character',
+      actual: createTypingSchedule('😀🎉'),
+      expected: [
+        { char: '😀', delay: 0 },
+        { char: '🎉', delay: 10 }
+      ]
+    });
+  });
 });

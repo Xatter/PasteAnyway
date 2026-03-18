@@ -123,6 +123,36 @@ describe('createKeyboardEventOptions', () => {
     });
   });
 
+  test('non-ASCII characters', () => {
+    assert({
+      given: 'an accented character "é"',
+      should: 'return Unidentified code',
+      actual: createKeyboardEventOptions('é'),
+      expected: {
+        key: 'é',
+        code: 'Unidentified',
+        charCode: 233,
+        keyCode: 233,
+        which: 233,
+        bubbles: true
+      }
+    });
+
+    assert({
+      given: 'a CJK character "中"',
+      should: 'return Unidentified code',
+      actual: createKeyboardEventOptions('中'),
+      expected: {
+        key: '中',
+        code: 'Unidentified',
+        charCode: 20013,
+        keyCode: 20013,
+        which: 20013,
+        bubbles: true
+      }
+    });
+  });
+
   test('punctuation', () => {
     assert({
       given: 'an exclamation mark',

@@ -12,7 +12,7 @@ const DEFAULT_DELAY = 10;
  * @returns {Array<{char: string, delay: number}>} Schedule of characters with delays
  */
 export const createTypingSchedule = (text, delay = DEFAULT_DELAY) =>
-  text.split('').map((char, i) => ({
+  [...text].map((char, i) => ({
     char,
     delay: i * delay
   }));
